@@ -1,0 +1,49 @@
+
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'project-report'
+
+group = 'ru.kafka'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+    maven { url 'http://bm.glosav.ax:8077/repository/glosav-release' }
+    maven { url 'http://bm.glosav.ax:8077/repository/glosav-snapshot' }
+    maven { url "http://bm.glosav.ax:8077/repository/thirdparty/" }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.kafka:spring-kafka'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    compile(group: 'ru.glosav.glosavcluster', name: 'gc-java-common', version: '0.7.7')
+    compile(group: 'ru.glosav.glosavcluster', name: 'gc-protobuf-common', version: '0.1.0')
+    compile(group: 'ru.glosav.glosavcluster', name: 'gc-stream-common', version: '0.1.6')
+    compile(group: 'ru.glosav.glosavcluster', name: 'rest-common', version: '0.2.8')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
